@@ -45,8 +45,7 @@
 }
 
 html, body {
-  height: 100%;
-  overflow: hidden;
+  min-height: 100%;
   font-family: var(--font-body);
   background: var(--indigo);
   color: var(--ink);
@@ -62,6 +61,8 @@ html, body {
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s ease, visibility 0.5s ease;
+  overflow-y: auto; /* スクロールを許可 */
+  -webkit-overflow-scrolling: touch;
 }
 .screen.active {
   opacity: 1;
@@ -73,12 +74,11 @@ html, body {
    ウェルカム画面
    ======================================== */
 #welcome-screen {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block; /* centerを維持しつつスクロール可能に */
   background: var(--indigo);
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* 和柄背景パターン */
