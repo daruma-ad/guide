@@ -1,0 +1,941 @@
+/* ========================================
+   AI忍者くん — 和風テーマ CSS
+   ======================================== */
+
+/* ---- リセット & ベース ---- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* 和風カラーパレット */
+  --indigo: #1B2838;          /* 藍色 (深め) */
+  --indigo-light: #2A3F5F;
+  --vermillion: #D4542A;      /* 朱色 */
+  --vermillion-glow: #E8764F;
+  --gold: #C9A84C;            /* 金色 */
+  --gold-light: #E6CC6A;
+  --cream: #FAF6F0;           /* 生成り */
+  --white: #FFFFFF;
+  --ink: #1A1A2E;             /* 墨色 */
+  --ink-soft: #3A3A5C;
+  --cloud: #F0EDE6;           /* 雲色 */
+  --sakura: #F4A7BB;          /* 桜色 */
+  --matcha: #6B8E5A;          /* 抹茶 */
+
+  /* グラデーション */
+  --grad-header: linear-gradient(135deg, #1B2838 0%, #2A3F5F 100%);
+  --grad-ninja: linear-gradient(135deg, #1B2838 0%, #2D3B55 100%);
+  --grad-gold: linear-gradient(135deg, #C9A84C 0%, #E6CC6A 100%);
+  --grad-vermillion: linear-gradient(135deg, #D4542A 0%, #E8764F 100%);
+  
+  /* タイポグラフィ */
+  --font-main: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+  --font-body: 'Noto Sans JP', sans-serif;
+
+  /* シャドウ */
+  --shadow-sm: 0 2px 8px rgba(27, 40, 56, 0.08);
+  --shadow-md: 0 4px 20px rgba(27, 40, 56, 0.12);
+  --shadow-lg: 0 8px 40px rgba(27, 40, 56, 0.18);
+  --shadow-glow-gold: 0 0 30px rgba(201, 168, 76, 0.3);
+
+  /* レイアウト */
+  --header-height: 64px;
+  --input-area-height: 80px;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  font-family: var(--font-body);
+  background: var(--indigo);
+  color: var(--ink);
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* ---- 画面制御 ---- */
+.screen {
+  position: fixed;
+  inset: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+.screen.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+}
+
+/* ========================================
+   ウェルカム画面
+   ======================================== */
+#welcome-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--indigo);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 和柄背景パターン */
+.welcome-bg-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(201, 168, 76, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(212, 84, 42, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(201, 168, 76, 0.03) 0%, transparent 70%);
+  animation: patternShift 20s ease-in-out infinite alternate;
+}
+
+@keyframes patternShift {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.1) rotate(2deg); }
+}
+
+.welcome-content {
+  text-align: center;
+  z-index: 2;
+  padding: 40px 24px;
+  max-width: 600px;
+  width: 100%;
+}
+
+/* 忍者キャラ ロゴ */
+.ninja-logo {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.ninja-character {
+  font-size: 80px;
+  animation: ninjaFloat 3s ease-in-out infinite;
+  filter: drop-shadow(0 8px 24px rgba(201, 168, 76, 0.3));
+}
+
+@keyframes ninjaFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+.logo-glow {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 20px;
+  background: radial-gradient(ellipse, rgba(201, 168, 76, 0.3) 0%, transparent 70%);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.5; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.3); }
+}
+
+.shop-name {
+  font-family: var(--font-main);
+  font-size: 48px;
+  font-weight: 900;
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.15em;
+  margin-bottom: 4px;
+  text-shadow: none;
+}
+
+.shop-tagline {
+  color: rgba(201, 168, 76, 0.6);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  margin-bottom: 28px;
+}
+
+.welcome-message {
+  color: var(--cream);
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 36px;
+  opacity: 0.9;
+}
+
+/* 言語選択グリッド */
+.language-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.lang-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--cream);
+  font-family: var(--font-body);
+}
+
+.lang-btn:hover, .lang-btn:active {
+  background: rgba(201, 168, 76, 0.15);
+  border-color: var(--gold);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.lang-btn .flag {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.lang-btn .lang-name {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* ========================================
+   チャット画面
+   ======================================== */
+#chat-screen {
+  display: flex;
+  flex-direction: column;
+  background: var(--cream);
+}
+
+/* ---- ヘッダー ---- */
+.chat-header {
+  height: var(--header-height);
+  background: var(--grad-header);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 12px rgba(27, 40, 56, 0.2);
+  z-index: 20;
+}
+
+.header-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--cream);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.header-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.header-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.header-ninja {
+  font-size: 28px;
+}
+
+.header-title {
+  font-family: var(--font-main);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: 0.05em;
+}
+
+.header-lang {
+  font-size: 11px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  background: var(--grad-gold);
+  color: var(--ink);
+  font-weight: 600;
+}
+
+/* ---- メッセージエリア ---- */
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px 16px;
+  scroll-behavior: smooth;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  background: 
+    linear-gradient(180deg, rgba(240, 237, 230, 1) 0%, rgba(250, 246, 240, 1) 100%);
+}
+
+/* スクロールバー */
+.chat-messages::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-messages::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(27, 40, 56, 0.15);
+  border-radius: 4px;
+}
+
+/* ---- メッセージ共通 ---- */
+.message {
+  display: flex;
+  gap: 10px;
+  max-width: 85%;
+  animation: messageSlideIn 0.4s ease-out;
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.message-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.bubble {
+  padding: 14px 18px;
+  border-radius: 20px;
+  font-size: 15px;
+  line-height: 1.65;
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+
+/* ---- お客様メッセージ ---- */
+.customer-message {
+  align-self: flex-end;
+  flex-direction: row-reverse;
+}
+
+.customer-avatar {
+  background: rgba(201, 168, 76, 0.15);
+}
+
+.customer-bubble {
+  background: var(--grad-vermillion);
+  color: var(--white);
+  border-radius: 20px 20px 4px 20px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* ---- 忍者メッセージ ---- */
+.ninja-message {
+  align-self: flex-start;
+}
+
+.ninja-avatar {
+  background: var(--indigo);
+  box-shadow: 0 2px 8px rgba(27, 40, 56, 0.15);
+}
+
+.ninja-bubble {
+  background: var(--white);
+  color: var(--ink);
+  border-radius: 20px 20px 20px 4px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid rgba(27, 40, 56, 0.06);
+}
+
+/* 日本語訳バブル（スタッフ用） */
+.ninja-bubble-ja {
+  background: linear-gradient(135deg, rgba(27, 40, 56, 0.06) 0%, rgba(27, 40, 56, 0.03) 100%);
+  color: var(--ink-soft);
+  font-size: 13px;
+  border: 1px dashed rgba(27, 40, 56, 0.15);
+  border-radius: 16px 16px 16px 4px;
+  position: relative;
+  padding-left: 32px;
+}
+
+.ninja-bubble-ja::before {
+  content: '🇯🇵';
+  position: absolute;
+  left: 10px;
+  top: 12px;
+  font-size: 14px;
+}
+
+/* お客様発言の日本語訳ヒント */
+.translation-hint {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 8px 14px;
+  background: rgba(201, 168, 76, 0.08);
+  border-radius: 12px;
+  border-left: 3px solid var(--gold);
+  margin-bottom: 2px;
+}
+
+.translation-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.translation-text {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+/* ---- ローディング ---- */
+.loading-bubble {
+  min-width: 70px;
+}
+
+.loading-dots {
+  display: flex;
+  gap: 5px;
+  padding: 4px 0;
+}
+
+.loading-dots span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--indigo-light);
+  animation: dotBounce 1.4s ease-in-out infinite;
+}
+
+.loading-dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loading-dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes dotBounce {
+  0%, 80%, 100% { 
+    transform: scale(0.6);
+    opacity: 0.4;
+  }
+  40% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---- 入力エリア ---- */
+.chat-input-area {
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: var(--white);
+  border-top: 1px solid rgba(27, 40, 56, 0.08);
+  flex-shrink: 0;
+}
+
+.input-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  background: var(--cloud);
+  border-radius: 24px;
+  padding: 6px 6px 6px 18px;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.input-wrapper:focus-within {
+  border-color: var(--gold);
+}
+
+#chat-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font-size: 15px;
+  font-family: var(--font-body);
+  color: var(--ink);
+  resize: none;
+  outline: none;
+  line-height: 1.5;
+  max-height: 120px;
+  padding: 8px 0;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+#chat-input::placeholder {
+  color: rgba(27, 40, 56, 0.35);
+}
+
+.input-btn {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+}
+
+.voice-btn {
+  background: rgba(27, 40, 56, 0.08);
+  color: var(--ink-soft);
+}
+
+.voice-btn:hover {
+  background: rgba(27, 40, 56, 0.15);
+}
+
+.voice-btn.listening {
+  background: var(--vermillion);
+  color: var(--white);
+  animation: micPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes micPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(212, 84, 42, 0.4); }
+  50% { box-shadow: 0 0 0 10px rgba(212, 84, 42, 0); }
+}
+
+.send-btn {
+  background: var(--grad-gold);
+  color: var(--ink);
+}
+
+.send-btn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.send-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* ========================================
+   料金モーダル
+   ======================================== */
+.price-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 40, 56, 0.6);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.price-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.price-modal-content {
+  background: var(--white);
+  border-radius: 28px;
+  padding: 32px 24px;
+  max-width: 520px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: var(--shadow-lg);
+  animation: modalPop 0.4s ease-out;
+  position: relative;
+}
+
+@keyframes modalPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.price-modal-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border: none;
+  border-radius: 50%;
+  background: var(--cloud);
+  color: var(--ink-soft);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.price-modal-close:hover {
+  background: rgba(212, 84, 42, 0.1);
+  color: var(--vermillion);
+}
+
+.price-title {
+  font-family: var(--font-main);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.price-cards {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.price-card {
+  flex: 1;
+  min-width: 200px;
+  border-radius: 20px;
+  padding: 24px 20px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.price-card.standard {
+  background: linear-gradient(180deg, var(--cream) 0%, var(--white) 100%);
+  border: 2px solid rgba(27, 40, 56, 0.08);
+}
+
+.price-card.premium {
+  background: var(--grad-ninja);
+  color: var(--cream);
+  border: 2px solid var(--gold);
+  box-shadow: var(--shadow-glow-gold);
+}
+
+.price-card-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  padding: 4px 14px;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.price-card.standard .price-card-badge {
+  background: var(--cloud);
+  color: var(--ink-soft);
+}
+
+.price-card.premium .price-card-badge {
+  background: var(--grad-gold);
+  color: var(--ink);
+}
+
+.price-card-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+.price-card-name {
+  font-family: var(--font-main);
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.price-card-price {
+  font-size: 32px;
+  font-weight: 900;
+  margin-bottom: 2px;
+}
+
+.price-card.premium .price-card-price {
+  background: var(--grad-gold);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.price-card-tax {
+  font-size: 11px;
+  opacity: 0.6;
+  margin-bottom: 16px;
+}
+
+.price-card-features {
+  list-style: none;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.price-card-features li {
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.price-card.standard .price-card-features li {
+  color: var(--ink-soft);
+}
+
+.price-card.premium .price-card-features li {
+  color: rgba(250, 246, 240, 0.85);
+}
+
+/* ========================================
+   設定パネル
+   ======================================== */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background: rgba(27, 40, 56, 0.5);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s;
+}
+
+.settings-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.settings-panel {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 32px 28px;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: var(--shadow-lg);
+}
+
+.settings-panel h2 {
+  font-family: var(--font-main);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+
+.settings-group {
+  margin-bottom: 24px;
+}
+
+.settings-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.settings-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid var(--cloud);
+  border-radius: 14px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  color: var(--ink);
+  outline: none;
+  transition: border-color 0.2s;
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.settings-group input:focus {
+  border-color: var(--gold);
+}
+
+.settings-hint {
+  font-size: 11px;
+  color: var(--ink-soft);
+  opacity: 0.7;
+  margin-top: 6px;
+}
+
+.settings-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.settings-save, .settings-cancel {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.settings-save {
+  background: var(--grad-gold);
+  color: var(--ink);
+}
+
+.settings-save:hover {
+  box-shadow: var(--shadow-glow-gold);
+  transform: translateY(-1px);
+}
+
+.settings-cancel {
+  background: var(--cloud);
+  color: var(--ink-soft);
+}
+
+.settings-cancel:hover {
+  background: rgba(27, 40, 56, 0.1);
+}
+
+/* ========================================
+   レスポンシブ（タブレット最適化）
+   ======================================== */
+@media (min-width: 768px) {
+  .language-grid {
+    gap: 16px;
+  }
+
+  .lang-btn {
+    padding: 20px 12px;
+  }
+
+  .lang-btn .flag {
+    font-size: 40px;
+  }
+
+  .lang-btn .lang-name {
+    font-size: 13px;
+  }
+
+  .shop-name {
+    font-size: 60px;
+  }
+
+  .ninja-character {
+    font-size: 100px;
+  }
+
+  .chat-messages {
+    padding: 28px 24px;
+  }
+
+  .message {
+    max-width: 75%;
+  }
+
+  .bubble {
+    font-size: 16px;
+    padding: 16px 22px;
+  }
+
+  .ninja-bubble-ja {
+    font-size: 14px;
+  }
+
+  .price-cards {
+    flex-wrap: nowrap;
+  }
+}
+
+/* 大画面タブレット */
+@media (min-width: 1024px) {
+  .message {
+    max-width: 65%;
+  }
+
+  .chat-messages {
+    padding: 32px 40px;
+  }
+}
+
+/* スマホ（小画面） */
+@media (max-width: 480px) {
+  .language-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .shop-name {
+    font-size: 36px;
+  }
+
+  .ninja-character {
+    font-size: 60px;
+  }
+
+  .welcome-message {
+    font-size: 14px;
+  }
+
+  .price-cards {
+    flex-direction: column;
+  }
+}
