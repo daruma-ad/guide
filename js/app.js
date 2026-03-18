@@ -39,6 +39,9 @@ function init() {
   // 言語ボタン
   document.querySelectorAll('.lang-btn').forEach(btn => {
     btn.addEventListener('click', () => {
+      // iOS/Safari対策: ユーザーアクション内で音声を「アンロック」する
+      speech.unlockAudio();
+
       selectedLang = btn.dataset.lang;
       selectedLangLabel = btn.dataset.label;
       startChat();

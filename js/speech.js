@@ -9,6 +9,7 @@ export class SpeechManager {
     this.isListening = false;
     this.onResult = null;
     this.onListeningChange = null;
+    this.isUnlocked = false; // iOS用のロック解除フラグ
     this._initRecognition();
   }
 
@@ -67,11 +68,14 @@ export class SpeechManager {
   /** テキストを読み上げ */
   speak(text, langCode) {
     if (!this.synthesis) return;
-    this.synthesis.cancel(); // 前の読み上げを停止
+    
+    // iOS/Safari対策: ユーザーアクションなしで再生しようとすると失敗する場合があるため
+    // 既に開始されている場合は一旦キャンセル
+    this.synthesis.cancel();
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = langCode || 'en-US';
-    utterance.rate = 0.9;
+    utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
     // 適切な音声を選択
@@ -79,7 +83,24 @@ export class SpeechManager {
     const matchedVoice = voices.find(v => v.lang.startsWith(langCode?.split('-')[0] || 'en'));
     if (matchedVoice) utterance.voice = matchedVoice;
 
+    // 再生
     this.synthesis.speak(utterance);
+  }
+
+  /** 
+   * iOS/Safari用の音声ロック解除
+   * ユーザーの最初のクリック時に呼び出す必要がある
+   */
+  unlockAudio() {
+    if (this.isUnlocked || !this.synthesis) return;
+
+    // 空のテキストを一度再生することで音声合成のロックを解除する
+    const silent = new SpeechSynthesisUtterance(" ");
+    silent.volume = 0;
+    this.synthesis.speak(silent);
+    
+    this.isUnlocked = true;
+    console.log("Audio unlocked for iOS");
   }
 
   /** 読み上げ停止 */
