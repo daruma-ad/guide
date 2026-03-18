@@ -265,7 +265,7 @@ function appendLoading() {
   const loading = document.createElement('div');
   loading.className = 'message ninja-message loading-message';
   loading.innerHTML = `
-    <div class="message-avatar ninja-avatar">🥷</div>
+    <div class="message-avatar ninja-avatar"></div>
     <div class="message-body">
       <div class="bubble ninja-bubble loading-bubble">
         <div class="loading-dots">
