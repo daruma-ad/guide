@@ -126,14 +126,14 @@ function backToWelcome() {
 // ========================================
 function showGreeting() {
   const greetings = {
-    'en':    { foreign: "Welcome to Darumaya! 🥷✨ I'm AI Ninja-kun, your kimono guide. How can I help you today?", ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'zh-TW': { foreign: '歡迎來到達摩屋！🥷✨ 我是AI忍者君，您的和服嚮導。有什麼可以幫您的嗎？', ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'zh-CN': { foreign: '欢迎来到达摩屋！🥷✨ 我是AI忍者君，您的和服向导。有什么可以帮您的吗？', ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'ko':    { foreign: '다루마야에 오신 것을 환영합니다! 🥷✨ AI닌자군입니다. 기모노 안내를 도와드리겠습니다!', ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'fr':    { foreign: 'Bienvenue chez Darumaya ! 🥷✨ Je suis AI Ninja-kun, votre guide kimono. Comment puis-je vous aider ?', ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'es':    { foreign: '¡Bienvenido a Darumaya! 🥷✨ Soy AI Ninja-kun, tu guía de kimono. ¿En qué puedo ayudarte?', ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'th':    { foreign: 'ยินดีต้อนรับสู่ดารุมายะ! 🥷✨ ฉันคือ AI นินจาคุง ไกด์กิโมโนของคุณ จะให้ช่วยอะไรดีคะ?', ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。着物のご案内係でござる。何でもお聞きくだされ！' },
-    'auto':  { foreign: "Welcome to Darumaya! 🥷✨ I'm AI Ninja-kun. Please speak in your language — I'll understand!", ja: 'だるまやへようこそ！🥷✨ AI忍者くんです。お好きな言語で話しかけてくだされ！' },
+    'en':    { foreign: "Welcome to Darumaya! ✨ I'm Komachi, your kimono guide. How can I help you today?", ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'zh-TW': { foreign: '歡迎來到達摩屋！✨ 我是小町，您的和服嚮導。有什麼可以幫您的嗎？', ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'zh-CN': { foreign: '欢迎来到达摩屋！✨ 我是小町，您的和服向导。有什么可以帮您的吗？', ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'ko':    { foreign: '다루마야에 오신 것을 환영합니다! ✨ 코마치입니다. 기모노 안내를 도와드리겠습니다!', ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'fr':    { foreign: 'Bienvenue chez Darumaya ! ✨ Je suis Komachi, votre guide kimono. Comment puis-je vous aider ?', ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'es':    { foreign: '¡Bienvenido a Darumaya! ✨ Soy Komachi, tu guía de kimono. ¿En qué puedo ayudarte?', ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'th':    { foreign: 'ยินดีต้อนรับสู่ดารุมายะ! ✨ ฉันคือโคมะจิ ไกด์กิโมโนของคุณ จะให้ช่วยอะไรดีคะ?', ja: 'だるまやへようこそ！✨ 看板娘の小町です。着物のご案内をさせていただきますね。何でもお聞きください！' },
+    'auto':  { foreign: "Welcome to Darumaya! ✨ I'm Komachi. Please speak in your language — I'll understand!", ja: 'だるまやへようこそ！✨ 看板娘の小町です。お好きな言語で話しかけてくださいね！' },
   };
 
   const greeting = greetings[selectedLang] || greetings['en'];
@@ -242,7 +242,7 @@ function appendNinjaMessage(foreignText, jaText, customerJaText) {
   }
 
   bubble.innerHTML = `
-    <div class="message-avatar ninja-avatar">🥷</div>
+    <div class="message-avatar ninja-avatar"></div>
     <div class="message-body">
       ${customerTranslation}
       <div class="bubble ninja-bubble foreign-text">${escapeHtml(foreignText)}</div>

@@ -10,36 +10,34 @@
 }
 
 :root {
-  /* 和風カラーパレット */
-  --indigo: #1B2838;          /* 藍色 (深め) */
-  --indigo-light: #2A3F5F;
-  --vermillion: #D4542A;      /* 朱色 */
-  --vermillion-glow: #E8764F;
-  --gold: #C9A84C;            /* 金色 */
-  --gold-light: #E6CC6A;
-  --cream: #FAF6F0;           /* 生成り */
+  /* 新・和風カラーパレット (小町ちゃんカラー) */
+  --indigo: #0B0E14;          /* 深い藍色（背景） */
+  --indigo-light: #1A1F2B;
+  --vermillion: #FF3366;      /* ピンク（着物） */
+  --pink: #FF66AA;            /* 明るいピンク */
+  --cyan: #00E5FF;            /* シアン（アクセント） */
+  --gold: #FFD700;            /* 金色 */
+  --cream: #F8F9FB;           /* 生成り */
   --white: #FFFFFF;
-  --ink: #1A1A2E;             /* 墨色 */
-  --ink-soft: #3A3A5C;
-  --cloud: #F0EDE6;           /* 雲色 */
-  --sakura: #F4A7BB;          /* 桜色 */
-  --matcha: #6B8E5A;          /* 抹茶 */
+  --ink: #0A0A0A;             /* 墨色 */
+  --sakura: #FFB7C5;
 
   /* グラデーション */
-  --grad-header: linear-gradient(135deg, #1B2838 0%, #2A3F5F 100%);
-  --grad-ninja: linear-gradient(135deg, #1B2838 0%, #2D3B55 100%);
-  --grad-gold: linear-gradient(135deg, #C9A84C 0%, #E6CC6A 100%);
-  --grad-vermillion: linear-gradient(135deg, #D4542A 0%, #E8764F 100%);
+  --grad-header: linear-gradient(135deg, #0B101B 0%, #1A2542 100%);
+  --grad-komachi: linear-gradient(135deg, #FF3366 0%, #FF66AA 100%);
+  --grad-cyan: linear-gradient(135deg, #00E5FF 0%, #00B8D4 100%);
+  --grad-gold: linear-gradient(135deg, #FFD700 0%, #FFAA00 100%);
   
   /* タイポグラフィ */
   --font-main: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
   --font-body: 'Noto Sans JP', sans-serif;
 
   /* シャドウ */
-  --shadow-sm: 0 2px 8px rgba(27, 40, 56, 0.08);
-  --shadow-md: 0 4px 20px rgba(27, 40, 56, 0.12);
-  --shadow-lg: 0 8px 40px rgba(27, 40, 56, 0.18);
-  --shadow-glow-gold: 0 0 30px rgba(201, 168, 76, 0.3);
+  --shadow-sm: 0 2px 8px rgba(0, 229, 255, 0.1);
+  --shadow-md: 0 4px 20px rgba(255, 51, 102, 0.15);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.3);
+  --shadow-glow-cyan: 0 0 20px rgba(0, 229, 255, 0.4);
+  --shadow-glow-pink: 0 0 20px rgba(255, 51, 102, 0.4);
 
   /* レイアウト */
   --header-height: 64px;
@@ -107,33 +105,36 @@ html, body {
   width: 100%;
 }
 
-/* 忍者キャラ ロゴ */
-.ninja-logo {
+/* 小町ちゃん画像 ロゴ */
+.komachi-logo {
   position: relative;
   display: inline-block;
   margin-bottom: 20px;
 }
 
-.ninja-character {
-  font-size: 80px;
-  animation: ninjaFloat 3s ease-in-out infinite;
-  filter: drop-shadow(0 8px 24px rgba(201, 168, 76, 0.3));
+.komachi-character {
+  width: 280px;
+  height: auto;
+  border-radius: 50%;
+  animation: komachiFloat 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 229, 255, 0.3));
+  border: 4px solid var(--cyan);
 }
 
-@keyframes ninjaFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+@keyframes komachiFloat {
+  0%, 100% { transform: translateY(0) scale(1.0); }
+  50% { transform: translateY(-15px) scale(1.02); }
 }
 
 .logo-glow {
   position: absolute;
-  bottom: -10px;
+  bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 20px;
-  background: radial-gradient(ellipse, rgba(201, 168, 76, 0.3) 0%, transparent 70%);
-  animation: glowPulse 3s ease-in-out infinite;
+  width: 120px;
+  height: 30px;
+  background: radial-gradient(ellipse, rgba(0, 229, 255, 0.4) 0%, transparent 70%);
+  animation: glowPulse 4s ease-in-out infinite;
 }
 
 @keyframes glowPulse {
@@ -260,15 +261,22 @@ html, body {
   gap: 8px;
 }
 
-.header-ninja {
-  font-size: 28px;
+.header-komachi {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--cyan);
+  object-fit: cover;
 }
 
 .header-title {
   font-family: var(--font-main);
   font-size: 18px;
   font-weight: 700;
-  color: var(--cream);
+  background: var(--grad-cyan);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   letter-spacing: 0.05em;
 }
 
@@ -276,8 +284,8 @@ html, body {
   font-size: 11px;
   padding: 3px 10px;
   border-radius: 20px;
-  background: var(--grad-gold);
-  color: var(--ink);
+  background: var(--grad-komachi);
+  color: var(--white);
   font-weight: 600;
 }
 
@@ -369,14 +377,17 @@ html, body {
   box-shadow: var(--shadow-sm);
 }
 
-/* ---- 忍者メッセージ ---- */
+/* ---- 小町ちゃんメッセージ ---- */
 .ninja-message {
   align-self: flex-start;
 }
 
 .ninja-avatar {
-  background: var(--indigo);
-  box-shadow: 0 2px 8px rgba(27, 40, 56, 0.15);
+  background: var(--white);
+  box-shadow: 0 0 10px rgba(0, 229, 255, 0.2);
+  border: 2px solid var(--cyan);
+  background-image: url('../komachi2.png');
+  background-size: cover;
 }
 
 .ninja-bubble {
@@ -384,7 +395,7 @@ html, body {
   color: var(--ink);
   border-radius: 20px 20px 20px 4px;
   box-shadow: var(--shadow-sm);
-  border: 1px solid rgba(27, 40, 56, 0.06);
+  border: 1px solid var(--cyan-light, rgba(0, 229, 255, 0.1));
 }
 
 /* 日本語訳バブル（スタッフ用） */
@@ -665,10 +676,10 @@ html, body {
 }
 
 .price-card.premium {
-  background: var(--grad-ninja);
+  background: var(--grad-header);
   color: var(--cream);
-  border: 2px solid var(--gold);
-  box-shadow: var(--shadow-glow-gold);
+  border: 2px solid var(--cyan);
+  box-shadow: var(--shadow-glow-cyan);
 }
 
 .price-card-badge {
