@@ -21,6 +21,7 @@ const btnSend        = document.getElementById('btn-send');
 const btnVoice       = document.getElementById('btn-voice');
 const btnBack        = document.getElementById('btn-back');
 const btnSettings    = document.getElementById('btn-settings');
+const btnPrice       = document.getElementById('btn-price');
 const langBadge      = document.getElementById('current-lang-badge');
 const priceModal     = document.getElementById('price-modal');
 const priceModalClose = document.getElementById('price-modal-close');
@@ -80,6 +81,11 @@ function init() {
   btnCloseSettings.addEventListener('click', closeSettings);
   settingsOverlay.addEventListener('click', (e) => {
     if (e.target === settingsOverlay) closeSettings();
+  });
+
+  // 料金ボタン (手動表示)
+  btnPrice.addEventListener('click', () => {
+    priceModal.classList.add('active');
   });
 
   // 料金モーダル

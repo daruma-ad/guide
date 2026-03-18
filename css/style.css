@@ -289,6 +289,15 @@ html, body {
   font-weight: 600;
 }
 
+.header-price-btn {
+  margin-left: 8px;
+  background: rgba(255, 215, 0, 0.15) !important;
+  border: 1px solid rgba(255, 215, 0, 0.3) !important;
+}
+.header-price-btn:hover {
+  background: rgba(255, 215, 0, 0.3) !important;
+}
+
 /* ---- メッセージエリア ---- */
 .chat-messages {
   flex: 1;
