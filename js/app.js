@@ -100,6 +100,13 @@ function init() {
   if (!speech.isSupported) {
     btnVoice.style.display = 'none';
   }
+
+  // サービスワーカー登録
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+      .then(() => console.log('Service Worker Registered'))
+      .catch(err => console.error('SW Registration Failed', err));
+  }
 }
 
 // ========================================
