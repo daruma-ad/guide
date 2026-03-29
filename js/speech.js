@@ -78,10 +78,24 @@ export class SpeechManager {
     utterance.rate = 1.0;
     utterance.pitch = 1.0;
 
-    // 適切な音声を選択
+    // 適切な音声を選択（女性の声を優先）
     const voices = this.synthesis.getVoices();
-    const matchedVoice = voices.find(v => v.lang.startsWith(langCode?.split('-')[0] || 'en'));
-    if (matchedVoice) utterance.voice = matchedVoice;
+    const matchedVoices = voices.filter(v => v.lang.startsWith(langCode?.split('-')[0] || 'en'));
+    
+    // 女性のキーワードを持つ声を探す
+    let selectedVoice = matchedVoices.find(v => 
+      v.name.toLowerCase().includes('female') || 
+      v.name.toLowerCase().includes('girl') ||
+      v.name.includes('Ting-Ting') || // 中国語 (zh-CN)
+      v.name.includes('Mei-Jia') ||   // 中国語 (zh-TW)
+      v.name.includes('Kyoko') ||     // 日本語
+      v.name.includes('Samantha')     // 英語
+    );
+
+    // 見つからなければ最初の候補にする
+    if (!selectedVoice) selectedVoice = matchedVoices[0];
+    
+    if (selectedVoice) utterance.voice = selectedVoice;
 
     // 再生
     this.synthesis.speak(utterance);
